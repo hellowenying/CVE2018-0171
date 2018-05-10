@@ -143,7 +143,7 @@ Focus 1:
 ``}``
 
 Focus 2:
-`if(tlv_length != 0) {`
+`if (tlv_length != 0) {`
   `#size = tlv_length     <-----(LOOPHOLE) NO VALIDATION CHECK`
 `}
 
@@ -152,7 +152,7 @@ Focus 3:
  `do {`
    `memcpy (src, dest, size);`
    `size-=1;`
- `}while (size!=0)`
+ `} while (size!=0)`
 `}`
 
 * size is saved as a parameter for later memcpy (src, dest, size)
