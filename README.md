@@ -85,6 +85,9 @@ what is the objective of the script?
 * the <SMI IBC Server Process> process contains a Smart Install Client implementation code
 * the Smart Install Client starts a server on the TCP(4786) port (opened by default) to interact with the Smart Install Director
 * a specially crafted malicious message ibd_init_discovery_msg for the stack-based buffer overflow occurs
+* acts as the integrated branch director (IBD) 
+* due to the no authentication desgin in this feature, this can be crafted easily
+ 
 
 what is struct.park(function)?
 * it packs a list of values into a string representation of the specified type
