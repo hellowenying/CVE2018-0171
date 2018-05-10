@@ -109,7 +109,9 @@ what is tlv?
 
 ### WIRESHARK PACKET SNIFFING
 ![wireshark1](https://user-images.githubusercontent.com/23307275/39845865-dec1d724-542a-11e8-9ece-42d45e9f5526.PNG)
+
 <br/>
+
 ![wireshark2](https://user-images.githubusercontent.com/23307275/39845860-ddc64f62-542a-11e8-90f1-d5e0707524b8.PNG)
 
 
@@ -165,9 +167,13 @@ Focus 3:
 * R4 (data content) to R3 (buffer) do while the size is not 0 (referenced back to focus 1)
 
 ![before overflow](https://user-images.githubusercontent.com/23307275/39845861-de072bfe-542a-11e8-8e33-585ee1d6aace.PNG)
+
 * the figure above shows that the contents of 0xd8 bytes starting from 0x318e890 will be copied into the buffers starting from 0x3df24a8 in the stack frame.
+
 <br/>
-![after overflow](https://user-images.githubusercontent.com/23307275/39845856-d7f5679e-542a-11e8-900c-d7b55b2bc4f6.PNG)
+![after overflow](https://user-images.githubusercontent.com/23307275/39846025-f5b87400-542b-11e8-8d67-51016f3d2b5c.PNG)
+<br/>
+
 * the above figure shows the contents of the function stack frame after the memcpy operation. The stack frame of this function is 0x58 bytes in size.
 Obviously, the buffer overflow has already occurred. After the function is overwritten by 0x42424242, the pointer of the execution code area is skipped. At this point, the buffer overflow process has been analyzed.
 
