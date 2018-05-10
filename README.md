@@ -104,18 +104,21 @@ what is tlv?
 
 
 ### CRAFTED PACKET STRUCTURE FROM THE SCRIPT
+![packet structure](https://user-images.githubusercontent.com/23307275/39845863-de67a538-542a-11e8-9c23-7d5b38e13e75.PNG)
 
-*insert the picture of the packet structure
-![](https://drive.google.com/open?id=1Qc5AmswiYVC0GrqY0BTNu7QB_yK9VVKP)
 
 ### WIRESHARK PACKET SNIFFING
+![wireshark1](https://user-images.githubusercontent.com/23307275/39845865-dec1d724-542a-11e8-9ece-42d45e9f5526.PNG)
+<br/>
+![wireshark2](https://user-images.githubusercontent.com/23307275/39845860-ddc64f62-542a-11e8-90f1-d5e0707524b8.PNG)
 
-*insert the wireshark 1 and 2 screenshot
 
 ### FUNCTION OF EXPOLIT IS LOCATED
 * smi_ibc_handle_ibd_init_discovery_msg, SUB_B258CC
-*insert the overview and sub routine
-*insert r6 (we can use the payload in the assembly language code)
+
+![overview](https://user-images.githubusercontent.com/23307275/39845857-d822a452-542a-11e8-9c19-e39ffbe45655.PNG)
+![sub_routine](https://user-images.githubusercontent.com/23307275/39845855-d7c60620-542a-11e8-8bf1-408e90fcfcf3.PNG)
+![r6](https://user-images.githubusercontent.com/23307275/39845864-de93c1fe-542a-11e8-922d-35b208c18658.PNG)
 
   R3: ptr to the tlv_type <br/>
   R4: length of tlv <br/>
@@ -148,7 +151,9 @@ Focus 3:
 * just copy without checking if the size of the data exceed the allocated size of buffer <---- buffer overflow will occurs
 
 ### BEFORE AND AFTER BUFFER OVERFLOW IN LOW-LEVEL
-*insert from the code logic
+![from the code logic](https://user-images.githubusercontent.com/23307275/39845862-de324c8a-542a-11e8-9df2-02a10f7cfb7d.PNG)
+
+
 
   R3 is the buffer length of 0x58 #dst <br/>
   R4 is the content of the TlL data #scr <br/>
@@ -159,10 +164,10 @@ Focus 3:
 * 0xd8 (216 bytes) to be copied to the allocated 0x58 (88 bytes) buffer  <--- buffer overflow occurs
 * R4 (data content) to R3 (buffer) do while the size is not 0 (referenced back to focus 1)
 
-*insert before and
+![before overflow](https://user-images.githubusercontent.com/23307275/39845861-de072bfe-542a-11e8-8e33-585ee1d6aace.PNG)
 * the figure above shows that the contents of 0xd8 bytes starting from 0x318e890 will be copied into the buffers starting from 0x3df24a8 in the stack frame.
-
-*insert after image
+<br/>
+![after overflow](https://user-images.githubusercontent.com/23307275/39845856-d7f5679e-542a-11e8-900c-d7b55b2bc4f6.PNG)
 * the above figure shows the contents of the function stack frame after the memcpy operation. The stack frame of this function is 0x58 bytes in size.
 Obviously, the buffer overflow has already occurred. After the function is overwritten by 0x42424242, the pointer of the execution code area is skipped. At this point, the buffer overflow process has been analyzed.
 
