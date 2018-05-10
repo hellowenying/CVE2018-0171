@@ -33,7 +33,7 @@ what is watchdog?
 
 
 
-### smi_ibc_init_discovery_BoF.py.PY BREAKDOWN
+### PoC SCRIPT BREAKDOWN
 
     import socket 
     import struct 
