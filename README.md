@@ -177,9 +177,6 @@ Focus 3:
 
 * the figure above shows that the contents of 0xd8 bytes starting from 0x318e890 will be copied into the buffers starting from 0x3df24a8 in the stack frame.
 
-<br/>
-![after overflow](https://user-images.githubusercontent.com/23307275/39849799-a6205f1a-5440-11e8-9dd5-3886c3cb1da3.PNG)
-
 * the above figure shows the contents of the function stack frame after the memcpy operation. The stack frame of this function is 0x58 bytes in size. After the function is overwritten by 0x42424242, the pointer of the execution code area is skipped resulting a buffer overflow situation. 
 
 * the content of the register changes along with the CPU instructions
@@ -196,3 +193,6 @@ Focus 3:
 ### References
 * https://embedi.com/blog/cisco-smart-install-remote-code-execution/
 * https://www.anquanke.com/post/id/105473
+
+    <br/>
+    ![after overflow](https://user-images.githubusercontent.com/23307275/39849799-a6205f1a-5440-11e8-9dd5-3886c3cb1da3.PNG)
