@@ -162,7 +162,7 @@ Focus 3:
 * tlv-type number assignment, http://irl.cs.ucla.edu/~cawka/spec/types.html
 * size is the number of bytes to be copied
 * fetch and copy data without verification
-* just copy without checking if the size of the data exceed the allocated size of buffer <---- buffer overflow will occurs
+* just copy without checking if the size of the data exceed the allocated size of buffer <---- buffer overflow will occur
 
 ### BEFORE AND AFTER BUFFER OVERFLOW IN ASSEMBLY LANGUAGE CODE
 ![from the code logic](https://user-images.githubusercontent.com/23307275/39845862-de324c8a-542a-11e8-9df2-02a10f7cfb7d.PNG)
@@ -174,7 +174,7 @@ Focus 3:
   memcpy (src, dest, size)
 
 * 0xd8 (216 bytes) to be copied to the allocated 0x58 (88 bytes) buffer  <--- buffer overflow occurs
-* R4 (data content) to R3 (buffer) do while the size is not 0 (referenced back to focus 1)
+* R4 (data content) to R3 (buffer) do while the size is not 0 (referenced back to focus 3)
 
 ![before overflow](https://user-images.githubusercontent.com/23307275/39845861-de072bfe-542a-11e8-8e33-585ee1d6aace.PNG)
 
