@@ -121,12 +121,19 @@ what is tlv?
 
 ![overview](https://user-images.githubusercontent.com/23307275/39845857-d822a452-542a-11e8-9c19-e39ffbe45655.PNG)
 ![sub_routine](https://user-images.githubusercontent.com/23307275/39845855-d7c60620-542a-11e8-8bf1-408e90fcfcf3.PNG)
-![r6](https://user-images.githubusercontent.com/23307275/39845864-de93c1fe-542a-11e8-922d-35b208c18658.PNG)
+
 
   R3: ptr to the tlv_type <br/>
   R4: length of tlv <br/>
   R5: ptr to the 16 bytes header <br/>
   R6: ptr to the TLV data <br/>
+ 
+  ![allr](https://user-images.githubusercontent.com/23307275/39849919-5343e194-5441-11e8-809d-e86cc2236fda.PNG)
+  <br/>
+  ![r5](https://user-images.githubusercontent.com/23307275/39849921-57100046-5441-11e8-84e5-4cd2514e0378.PNG)
+  <br/>
+  ![r6](https://user-images.githubusercontent.com/23307275/39845864-de93c1fe-542a-11e8-922d-35b208c18658.PNG)
+  <br/>
 
 ### LOGIC AND THE EXACT PLACE OF EXPLOIT
 
