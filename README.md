@@ -195,7 +195,3 @@ Focus 3:
 2. use ACL to filter traffic from tcp port 4786, or limit through Control Panel Policy (CoPP)
 3. patch and upgrade
 4. use new plug and play (Cisco Network Plug and Play) solution instead
-
-### References
-* https://embedi.com/blog/cisco-smart-install-remote-code-execution/
-* https://www.anquanke.com/post/id/105473
