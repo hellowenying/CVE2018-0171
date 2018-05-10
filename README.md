@@ -161,7 +161,7 @@ Focus 3:
 * fetch and copy data without verification
 * just copy without checking if the size of the data exceed the allocated size of buffer <---- buffer overflow will occurs
 
-### BEFORE AND AFTER BUFFER OVERFLOW IN LOW-LEVEL
+### BEFORE AND AFTER BUFFER OVERFLOW IN ASSEMBLY LANGUAGE CODE
 ![from the code logic](https://user-images.githubusercontent.com/23307275/39845862-de324c8a-542a-11e8-9df2-02a10f7cfb7d.PNG)
 
   R3 is the buffer length of 0x58 #dst <br/>
