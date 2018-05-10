@@ -177,7 +177,6 @@ Focus 3:
 
 * the figure above shows that the contents of 0xd8 bytes starting from 0x318e890 will be copied into the buffers starting from 0x3df24a8 in the stack frame.
 
- <br/>
 ![after](https://user-images.githubusercontent.com/23307275/39850049-fb82c5dc-5441-11e8-918c-16ed55ac8c87.PNG)
  <br/>
  
